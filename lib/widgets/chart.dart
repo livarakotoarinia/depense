@@ -11,7 +11,7 @@ class Chart extends StatelessWidget {
 
   // getter that are calculate dynamically
   List<Map<String, dynamic>> get groupedTransactionsValues {
-    // generate a list if we know the nomber of elements
+    // generate a list if we know the number of elements
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),

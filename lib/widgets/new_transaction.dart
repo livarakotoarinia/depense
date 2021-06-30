@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -55,55 +57,70 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              decoration: InputDecoration(labelText: 'Titre'),
-              controller: _titleCtrl,
-              onSubmitted: (_) => _submitData(),
-              // onChanged: (value) => titleInput = value,
-            ),
-            TextField(
-              controller: _amountCtrl,
-              decoration: InputDecoration(labelText: 'Prix'),
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitData(),
-              // onChanged: (value) => amountInput = value,
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    // ignore: unnecessary_null_comparison
-                    _selectedDate == null
-                        ? 'Aucune date choisie'
-                        : 'Date choisie: ${DateFormat.yMd('fr').format(_selectedDate!)}',
-                  ),
-                  TextButton(
-                    onPressed: _openDatePicker,
-                    child: Text(
-                      'Choisir une date',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                decoration: InputDecoration(labelText: 'Titre'),
+                controller: _titleCtrl,
+                onSubmitted: (_) => _submitData(),
+                // onChanged: (value) => titleInput = value,
+              ),
+              TextField(
+                controller: _amountCtrl,
+                decoration: InputDecoration(labelText: 'Prix'),
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitData(),
+                // onChanged: (value) => amountInput = value,
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      // ignore: unnecessary_null_comparison
+                      _selectedDate == null
+                          ? 'Aucune date choisie'
+                          : 'Date choisie: ${DateFormat.yMd('fr').format(_selectedDate!)}',
                     ),
-                  )
-                ],
+                    Platform.isIOS
+                        ? CupertinoButton(
+                            child: Text(
+                              'Choisir une date',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: _submitData,
+                          )
+                        : TextButton(
+                            onPressed: _openDatePicker,
+                            child: Text(
+                              'Choisir une date',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          )
+                  ],
+                ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: _submitData,
-              style: ElevatedButton.styleFrom(primary: Colors.purple),
-              child: Text(
-                'Ajouter transaction',
-              ),
-            )
-          ],
+              ElevatedButton(
+                onPressed: _submitData,
+                style: ElevatedButton.styleFrom(primary: Colors.purple),
+                child: Text(
+                  'Ajouter transaction',
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
