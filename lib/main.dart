@@ -140,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           )
         : AppBar(
-            title: Text('Dépense personnelle'),
+            title: Text('Dépenses personnelles'),
             actions: [
               IconButton(
                 icon: Icon(Icons.add),
